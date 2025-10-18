@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Custom Google Search (with Images)</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      margin: 0;
+      padding: 24px;
+      background: #fafafa;
+      color: #111;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    header {
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom: 18px;
+    }
+    header img { width:48px; height:48px; }
+    h1 { font-size: 1.25rem; margin:0; }
+    p { margin:6px 0 18px 0; color:#444; }
+    /* Make the results area more readable */
+    .gcse-searchresults-only, .gcse-search {
+      background: #fff;
+      border: 1px solid #e6e6e6;
+      padding: 12px;
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+    /* optionally limit image thumbnails size */
+    .gsc-thumbnail-inside img { max-width: 140px; max-height: 140px; object-fit:cover; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="https://www.gstatic.com/images/branding/product/1x/search_48dp.png" alt="search">
+      <div>
+        <h1>Google Custom Search</h1>
+        <p>Search powered by your Custom Search Engine (includes Images tab)</p>
+      </div>
+    </header>
+
+    <!-- Search element: this shows the search box + tabs + results together -->
+    <div class="gcse-search"></div>
+
+    <footer style="margin-top:18px;color:#666;font-size:0.9rem">
+      <div>Search ID (cx): <strong>0122d6f0ea8f04083</strong></div>
+      <div style="margin-top:6px">If you want only the box or only the results on different pages, you can use <code>gcse:searchbox-only</code> and <code>gcse:searchresults-only</code>.</div>
+    </footer>
+  </div>
+
+  <!-- Configure the Search Element BEFORE loading the cse.js script -->
+  <script>
+    // Configure the CSE element. This enables image search (images tab).
+    window.__gcse = {
+      // If you want explicit parsing, set parsetags: 'explicit' and call google.search.cse.element.render later.
+      parsetags: 'onload',
+      // enable image search tab
+      enableImageSearch: true,
+      // Optionally set a custom gname so you can reference it in JS: window.google && google.search.cse.element.getElement('gsearch')
+      gname: 'gsearch'
+    };
+  </script>
+
+  <!-- The CSE loader script (your cx is included in the URL) -->
+  <script async src="https://cse.google.com/cse.js?cx=0122d6f0ea8f04083"></script>
+
+  <!--
+    Notes & tips:
+    - The <div class="gcse-search"></div> displays:
+        1) the search box,
+        2) tabs (All / Images / News, depending on your CSE config),
+        3) results area.
+    - If the Images tab doesn't show up, make sure in your Custom Search Engine control panel you have Image Search enabled and "Search the entire web" turned on if you want global image results.
+    - To style the results further, you'll need to use the CSE look-and-feel settings in the CSE control panel or override CSS selectively (some CSE markup/classes are generated at runtime).
+  -->
+</body>
+</html>
